@@ -2,6 +2,7 @@ package org.abondarev.visual;
 
 import org.abondarev.visual.display.Display;
 import org.abondarev.visual.gfx.Assets;
+import org.abondarev.visual.input.KeyManager;
 import org.abondarev.visual.states.GameState;
 import org.abondarev.visual.states.MenuState;
 import org.abondarev.visual.states.State;
@@ -25,24 +26,28 @@ public class Game implements Runnable{
     private State gameState;
     private State menuState;
 
+    private KeyManager keyManager;
+
     public Game(String title, int width, int height){
         this.title = title;
         this.width = width;
         this.height = height;
-
+        keyManager = new KeyManager();
     }
 
     private void init(){
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init();
 
-        gameState = new GameState();
-        State.setState(gameState);
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
 
-        menuState = new MenuState();
+        State.setState(gameState);
     }
 
     private void tick(){
+        keyManager.tick();
         if(State.getState() != null){
             State.getState().tick();
         }
@@ -70,7 +75,8 @@ public class Game implements Runnable{
         init();
 
         int fps = 60;
-        double timePerTick = 1000000000 / fps;
+        long nanoSecond = 1000000000;
+        double timePerTick = nanoSecond / fps;
         double delta = 0;
         long now;
         long lastTime = System.nanoTime();
@@ -90,10 +96,10 @@ public class Game implements Runnable{
                 delta--;
             }
 
-            if(timer >= 1000000000){
+            if(timer >= nanoSecond){
                 System.out.println("FPS: " + ticks);
                 ticks = 0;
-                timer = 0;
+                timer -= nanoSecond;
             }
         }
 
@@ -117,5 +123,9 @@ public class Game implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
 }

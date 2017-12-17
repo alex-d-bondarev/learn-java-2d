@@ -1,7 +1,7 @@
 package org.abondarev.visual.states;
 
+import org.abondarev.visual.Game;
 import org.abondarev.visual.entities.creatures.Player;
-import org.abondarev.visual.gfx.Assets;
 
 import java.awt.*;
 
@@ -9,8 +9,9 @@ public class GameState extends State{
 
     private Player player;
 
-    public GameState(){
-        player = new Player(100, 100);
+    public GameState(Game game){
+        super(game);
+        player = new Player(game,100, 100);
     }
 
     public void tick() {

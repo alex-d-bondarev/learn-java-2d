@@ -1,10 +1,18 @@
 package org.abondarev.visual.states;
 
+import org.abondarev.visual.Game;
+
 import java.awt.*;
 
 public abstract class State {
 
     private static State currentState = null;
+
+    protected Game game;
+
+    public State(Game game) {
+        this.game = game;
+    }
 
     public abstract void tick();
     public abstract void render(Graphics g);
