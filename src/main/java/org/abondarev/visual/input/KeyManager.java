@@ -21,12 +21,10 @@ public class KeyManager implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
-        System.out.println("Pressed: " + e.getKeyCode());
     }
 
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
-        System.out.println("Releaseda: " + e.getKeyCode());
     }
 
     public void keyTyped(KeyEvent e) {
