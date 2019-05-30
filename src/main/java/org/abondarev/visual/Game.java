@@ -2,6 +2,7 @@ package org.abondarev.visual;
 
 import org.abondarev.visual.display.Display;
 import org.abondarev.visual.gfx.Assets;
+import org.abondarev.visual.gfx.GameCamera;
 import org.abondarev.visual.input.KeyManager;
 import org.abondarev.visual.states.GameState;
 import org.abondarev.visual.states.MenuState;
@@ -28,6 +29,8 @@ public class Game implements Runnable{
 
     private KeyManager keyManager;
 
+    private GameCamera gameCamera;
+
     public Game(String title, int width, int height){
         this.title = title;
         this.width = width;
@@ -39,6 +42,8 @@ public class Game implements Runnable{
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        gameCamera = new GameCamera(this,0,0);
 
         gameState = new GameState(this);
         menuState = new MenuState(this);
@@ -127,5 +132,17 @@ public class Game implements Runnable{
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public GameCamera getGameCamera() {
+        return gameCamera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
