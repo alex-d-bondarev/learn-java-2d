@@ -10,7 +10,7 @@ public class Assets {
 
     public static void init(){
 
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/OracleOfAges.gif"));
+        SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/OracleOfAges-Transparent-background.png"));
 
         player = sheet.crop(16*width-3, 5, width, height);
         dirt = sheet.crop(35*width, height+10, width, height);

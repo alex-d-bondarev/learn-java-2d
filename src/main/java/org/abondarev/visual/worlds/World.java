@@ -56,7 +56,7 @@ public class World {
     }
 
     private int getScreenEndY(){
-        return (int) Math.min(height, (handler.getGameCamera().getyOffset() / Tile.TILEHIGHT) / Tile.TILEHIGHT + 1);
+        return (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHIGHT + 1 );
     }
 
     public Tile getTile(int x, int y){
