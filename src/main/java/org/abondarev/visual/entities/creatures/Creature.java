@@ -2,6 +2,7 @@ package org.abondarev.visual.entities.creatures;
 
 import org.abondarev.visual.Handler;
 import org.abondarev.visual.entities.Entity;
+import org.abondarev.visual.tiles.Tile;
 
 public abstract class Creature extends Entity {
 
@@ -23,10 +24,65 @@ public abstract class Creature extends Entity {
     }
 
     public void move(){
-        x += xMove;
-        y += yMove;
+        moveX();
+        moveY();
     }
 
+    public void moveX(){
+        if(isMovingRight()) {
+            int collisionX = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+            tryHorizontalMove(collisionX);
+
+        } else if (isMovingLeft()){
+            int collisionX = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+            tryHorizontalMove(collisionX);
+        }
+    }
+
+    private boolean isMovingRight(){
+        return xMove > 0;
+    }
+
+    private boolean isMovingLeft(){
+        return xMove < 0;
+    }
+
+    private void tryHorizontalMove(int collisionX){
+        if(!collisionWithTile(collisionX, (int) (y + bounds.y) / Tile.TILEHIGHT) &&
+                !collisionWithTile(collisionX, (int) (y + bounds.y + bounds.height) / Tile.TILEHIGHT)){
+            x += xMove;
+        }
+    }
+
+    public void moveY(){
+        if(isMovingUp()) {
+            int collisionY = (int) (y + yMove + bounds.y) / Tile.TILEHIGHT;
+            tryVerticallMove(collisionY);
+
+        } else if (isMovingDown()){
+            int collisionY = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHIGHT;
+            tryVerticallMove(collisionY);
+        }
+    }
+
+    private boolean isMovingUp(){
+        return yMove < 0;
+    }
+
+    private boolean isMovingDown(){
+        return yMove > 0;
+    }
+
+    private void tryVerticallMove(int collisionY){
+        if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, collisionY) &&
+                !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, collisionY)){
+            y += yMove;
+        }
+    }
+
+    protected boolean collisionWithTile(int x, int y){
+        return handler.getWorld().getTile(x, y).isSolid();
+    }
 
     /////////////////////////
     // Getters and Setters //

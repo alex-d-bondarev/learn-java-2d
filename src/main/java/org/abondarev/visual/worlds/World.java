@@ -60,10 +60,18 @@ public class World {
     }
 
     public Tile getTile(int x, int y){
+        if(isOutsideOfTheMap(x, y)){
+            return Tile.grassTile;
+        }
+
         Tile t = Tile.tiles[this.tiles[x][y]];
         if(t == null)
             return Tile.dirtTile;
         return t;
+    }
+
+    private boolean isOutsideOfTheMap(int x, int y){
+        return x < 0 || y < 0 || x >= width || y >= height;
     }
 
     private void loadWorld(String path){
