@@ -1,6 +1,6 @@
 package org.abondarev.visual.worlds;
 
-import org.abondarev.visual.Game;
+import org.abondarev.visual.Handler;
 import org.abondarev.visual.tiles.Tile;
 import org.abondarev.visual.utils.Utils;
 
@@ -15,12 +15,12 @@ public class World {
 
     private static final String ALL_DELIMETERS = "\\s+";
 
-    private Game game;
+    private Handler handler;
     private int width, height, spawnX, spawnY;
     private int[][] tiles;
 
-    public World(Game game, String path){
-        this.game = game;
+    public World(Handler handler, String path){
+        this.handler = handler;
         loadWorld(path);
     }
 
@@ -29,13 +29,34 @@ public class World {
     }
 
     public void render(Graphics g){
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
+        int xStart = getScreenStartX();
+        int xEnd = getScreenEndX();
+        int yStart = getScreenStartY();
+        int yEnd = getScreenEndY();
+
+        for(int y = yStart; y < yEnd; y++){
+            for(int x = xStart; x < xEnd; x++){
                 getTile(x, y).render(g,
-                        (int) (x * Tile.TILEWIDTH - game.getGameCamera().getxOffset()),
-                        (int) (y * Tile.TILEHIGHT - game.getGameCamera().getyOffset()));
+                        (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()),
+                        (int) (y * Tile.TILEHIGHT - handler.getGameCamera().getyOffset()));
             }
         }
+    }
+
+    private int getScreenStartX() {
+        return (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+    }
+
+    private int getScreenEndX() {
+        return (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) /Tile.TILEWIDTH + 1 );
+    }
+
+    private int getScreenStartY(){
+        return (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHIGHT);
+    }
+
+    private int getScreenEndY(){
+        return (int) Math.min(height, (handler.getGameCamera().getyOffset() / Tile.TILEHIGHT) / Tile.TILEHIGHT + 1);
     }
 
     public Tile getTile(int x, int y){

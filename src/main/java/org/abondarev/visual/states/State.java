@@ -1,6 +1,7 @@
 package org.abondarev.visual.states;
 
 import org.abondarev.visual.Game;
+import org.abondarev.visual.Handler;
 
 import java.awt.*;
 
@@ -8,10 +9,10 @@ public abstract class State {
 
     private static State currentState = null;
 
-    protected Game game;
+    protected Handler handler;
 
-    public State(Game game) {
-        this.game = game;
+    public State(Handler handler) {
+        this.handler = handler;
     }
 
     public abstract void tick();

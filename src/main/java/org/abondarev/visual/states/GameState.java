@@ -1,6 +1,6 @@
 package org.abondarev.visual.states;
 
-import org.abondarev.visual.Game;
+import org.abondarev.visual.Handler;
 import org.abondarev.visual.entities.creatures.Player;
 import org.abondarev.visual.worlds.World;
 
@@ -11,10 +11,12 @@ public class GameState extends State{
     private Player player;
     private World world;
 
-    public GameState(Game game){
-        super(game);
-        player = new Player(game,100, 100);
-        world = new World(game, "res/worlds/world2.txt");
+    public GameState(Handler handler){
+        super(handler);
+        world = new World(handler, "res/worlds/world2.txt");
+
+        handler.setWorld(world);
+        player = new Player(handler,100, 100);
     }
 
     public void tick() {
