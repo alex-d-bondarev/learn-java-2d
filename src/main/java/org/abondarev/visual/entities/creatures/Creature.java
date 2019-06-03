@@ -8,7 +8,8 @@ public abstract class Creature extends Entity {
 
     public static final int DEFAULT_HEALTH = 10
             , DEFAULT_CREATURE_WIDTH = 64
-            , DEFAULT_CREATURE_HEIGHT = 64;
+            , DEFAULT_CREATURE_HEIGHT = 64
+            , COLLISION_BUFFER = 1;
     public static final float DEFAULT_SPEED = 3.0f;
 
     protected int health;
@@ -28,7 +29,7 @@ public abstract class Creature extends Entity {
         moveY();
     }
 
-    public void moveX(){
+    private void moveX(){
         if(isMovingRight()) {
             int collisionX = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
             tryHorizontalMove(collisionX);
@@ -51,10 +52,18 @@ public abstract class Creature extends Entity {
         if(!collisionWithTile(collisionX, (int) (y + bounds.y) / Tile.TILEHIGHT) &&
                 !collisionWithTile(collisionX, (int) (y + bounds.y + bounds.height) / Tile.TILEHIGHT)){
             x += xMove;
+        } else {
+            x = horizontalMoveCloseToTile(collisionX);
         }
     }
 
-    public void moveY(){
+    private int horizontalMoveCloseToTile(int collisionX){
+        return isMovingRight() ?
+                collisionX * Tile.TILEWIDTH - bounds.x - bounds.width - COLLISION_BUFFER:
+                collisionX * Tile.TILEWIDTH + bounds.x + bounds.width;
+    }
+
+    private void moveY(){
         if(isMovingUp()) {
             int collisionY = (int) (y + yMove + bounds.y) / Tile.TILEHIGHT;
             tryVerticallMove(collisionY);
@@ -77,7 +86,15 @@ public abstract class Creature extends Entity {
         if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, collisionY) &&
                 !collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, collisionY)){
             y += yMove;
+        } else {
+            y = verticalMoveCloseToTile(collisionY);
         }
+    }
+
+    private int verticalMoveCloseToTile(int collisionY){
+        return isMovingUp() ?
+                collisionY * Tile.TILEHIGHT + Tile.TILEHIGHT - bounds.y :
+                collisionY * Tile.TILEHIGHT - bounds.y - bounds.height - COLLISION_BUFFER;
     }
 
     protected boolean collisionWithTile(int x, int y){

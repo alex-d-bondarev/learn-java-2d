@@ -44,7 +44,7 @@ public class Player extends Creature{
                 height,
                 null);
 
-        showCollisionBoundary(g);
+//        showCollisionBoundary(g);
     }
 
     private void showCollisionBoundary(Graphics g){
