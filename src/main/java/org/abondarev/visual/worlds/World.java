@@ -1,6 +1,9 @@
 package org.abondarev.visual.worlds;
 
 import org.abondarev.visual.Handler;
+import org.abondarev.visual.entities.EntityManager;
+import org.abondarev.visual.entities.creatures.Player;
+import org.abondarev.visual.entities.statics.Tree;
 import org.abondarev.visual.tiles.Tile;
 import org.abondarev.visual.utils.Utils;
 
@@ -15,17 +18,23 @@ public class World {
 
     private static final String ALL_DELIMETERS = "\\s+";
 
+    private EntityManager entityManager;
     private Handler handler;
     private int width, height, spawnX, spawnY;
     private int[][] tiles;
 
     public World(Handler handler, String path){
         this.handler = handler;
+        entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+        entityManager.addEntity(new Tree(handler, 50, 50));
+
         loadWorld(path);
+        entityManager.getPlayer().setX(spawnX);
+        entityManager.getPlayer().setY(spawnY);
     }
 
     public void tick(){
-
+        entityManager.tick();
     }
 
     public void render(Graphics g){
@@ -41,6 +50,8 @@ public class World {
                         (int) (y * Tile.TILEHIGHT - handler.getGameCamera().getYOffset()));
             }
         }
+
+        entityManager.render(g);
     }
 
     private int getScreenStartX() {

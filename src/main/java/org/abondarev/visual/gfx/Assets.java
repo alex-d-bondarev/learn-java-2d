@@ -15,7 +15,7 @@ public class Assets {
 
         dirt = sheet.crop(35*width, height+10, width, height);
         grass = sheet.crop(36*width+5, 4*height+4, width, height);
-        tree = sheet.crop(37*width+7, 3*height-4, width, height);
+        tree = sheet.crop(35*width+3, 6*height-5, width*2, height*2);
         stone = sheet.crop(38*width+7, 7, width, height);
 
         playerDown = new BufferedImage[2];
