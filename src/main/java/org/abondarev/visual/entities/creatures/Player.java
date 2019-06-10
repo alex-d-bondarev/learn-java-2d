@@ -52,8 +52,8 @@ public class Player extends Creature{
 
     public void render(Graphics g) {
         g.drawImage(getCurrentAnimationFrame(),
-                (int) (x - handler.getGameCamera().getxOffset()),
-                (int) (y - handler.getGameCamera().getyOffset()),
+                (int) (x - handler.getGameCamera().getXOffset()),
+                (int) (y - handler.getGameCamera().getYOffset()),
                 width,
                 height,
                 null);
@@ -63,8 +63,8 @@ public class Player extends Creature{
 
     private void showCollisionBoundary(Graphics g){
         g.setColor(Color.red);
-        g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset()),
-                (int) (y + bounds.y - handler.getGameCamera().getyOffset()),
+        g.fillRect((int) (x + bounds.x - handler.getGameCamera().getXOffset()),
+                (int) (y + bounds.y - handler.getGameCamera().getYOffset()),
                 bounds.width,
                 bounds.height);
     }

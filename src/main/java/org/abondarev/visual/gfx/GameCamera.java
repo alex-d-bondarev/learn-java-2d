@@ -51,7 +51,7 @@ public class GameCamera {
         removekBlankSpace();
     }
 
-    public float getxOffset() {
+    public float getXOffset() {
         return xOffset;
     }
 
@@ -59,7 +59,7 @@ public class GameCamera {
         this.xOffset = xOffset;
     }
 
-    public float getyOffset() {
+    public float getYOffset() {
         return yOffset;
     }
 

@@ -37,26 +37,26 @@ public class World {
         for(int y = yStart; y < yEnd; y++){
             for(int x = xStart; x < xEnd; x++){
                 getTile(x, y).render(g,
-                        (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()),
-                        (int) (y * Tile.TILEHIGHT - handler.getGameCamera().getyOffset()));
+                        (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getXOffset()),
+                        (int) (y * Tile.TILEHIGHT - handler.getGameCamera().getYOffset()));
             }
         }
     }
 
     private int getScreenStartX() {
-        return (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+        return (int) Math.max(0, handler.getGameCamera().getXOffset() / Tile.TILEWIDTH);
     }
 
     private int getScreenEndX() {
-        return (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) /Tile.TILEWIDTH + 1 );
+        return (int) Math.min(width, (handler.getGameCamera().getXOffset() + handler.getWidth()) /Tile.TILEWIDTH + 1 );
     }
 
     private int getScreenStartY(){
-        return (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHIGHT);
+        return (int) Math.max(0, handler.getGameCamera().getYOffset() / Tile.TILEHIGHT);
     }
 
     private int getScreenEndY(){
-        return (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHIGHT + 1 );
+        return (int) Math.min(height, (handler.getGameCamera().getYOffset() + handler.getHeight()) / Tile.TILEHIGHT + 1 );
     }
 
     public Tile getTile(int x, int y){
