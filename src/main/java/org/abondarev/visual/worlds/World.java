@@ -98,4 +98,12 @@ public class World {
     private int getTileTokenValue(int x, int y, String[] tokens){
         return Utils.parseInt(tokens[(x + y * width) + NUMBER_OF_RESERVED_FILE_VALUES]);
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
