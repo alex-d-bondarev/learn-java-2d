@@ -3,7 +3,7 @@ package org.abondarev.visual.worlds;
 import org.abondarev.visual.Handler;
 import org.abondarev.visual.entities.EntityManager;
 import org.abondarev.visual.entities.creatures.Player;
-import org.abondarev.visual.entities.statics.Tree;
+import org.abondarev.visual.entities.statics.BigTree;
 import org.abondarev.visual.tiles.Tile;
 import org.abondarev.visual.utils.Utils;
 
@@ -26,7 +26,7 @@ public class World {
     public World(Handler handler, String path){
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-        entityManager.addEntity(new Tree(handler, 50, 50));
+        entityManager.addEntity(new BigTree(handler, 100, 200));
 
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX);
@@ -116,5 +116,9 @@ public class World {
 
     public int getHeight() {
         return height;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 }

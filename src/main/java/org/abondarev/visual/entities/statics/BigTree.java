@@ -6,10 +6,10 @@ import org.abondarev.visual.tiles.Tile;
 
 import java.awt.*;
 
-public class Tree extends StaticEntity {
+public class BigTree extends StaticEntity {
 
-    public Tree(Handler handler, float x, float y) {
-        super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHIGHT);
+    public BigTree(Handler handler, float x, float y) {
+        super(handler, x, y, Tile.TILEWIDTH*2, Tile.TILEHIGHT*2);
     }
 
     public void tick() {

@@ -18,19 +18,17 @@ public class EntityManager {
         this.player = player;
 
         entities = new ArrayList<Entity>();
+        entities.add(player);
     }
 
     public void tick(){
         entities.forEach(Entity::tick);
-        player.tick();
     }
 
     public void render(Graphics g){
         entities.forEach(entity -> {
             entity.render(g);
         });
-
-        player.render(g);
     }
 
     public void addEntity(Entity newEntity){
