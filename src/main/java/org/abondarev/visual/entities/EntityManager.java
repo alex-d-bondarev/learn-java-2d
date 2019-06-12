@@ -5,6 +5,7 @@ import org.abondarev.visual.entities.creatures.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class EntityManager {
 
@@ -12,6 +13,15 @@ public class EntityManager {
     private Player player;
 
     private ArrayList<Entity> entities;
+
+    private Comparator<Entity> renderSorter = new Comparator<Entity>() {
+        @Override
+        public int compare(Entity firstEntity, Entity secondEntity) {
+            return Integer.compare(
+                    (int) (firstEntity.getY() + firstEntity.height),
+                    (int) (secondEntity.getY() + secondEntity.height));
+        }
+    };
 
     public EntityManager(Handler handler, Player player) {
         this.handler = handler;
@@ -23,6 +33,7 @@ public class EntityManager {
 
     public void tick(){
         entities.forEach(Entity::tick);
+        entities.sort(renderSorter);
     }
 
     public void render(Graphics g){
