@@ -4,6 +4,7 @@ import org.abondarev.visual.display.Display;
 import org.abondarev.visual.gfx.Assets;
 import org.abondarev.visual.gfx.GameCamera;
 import org.abondarev.visual.input.KeyManager;
+import org.abondarev.visual.input.MouseManager;
 import org.abondarev.visual.states.GameState;
 import org.abondarev.visual.states.MenuState;
 import org.abondarev.visual.states.State;
@@ -24,23 +25,35 @@ public class Game implements Runnable{
 
     private Thread thread;
 
-    private State gameState;
-    private State menuState;
+    public State gameState;
+    public State menuState;
 
     private GameCamera gameCamera;
     private Handler handler;
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
     public Game(String title, int width, int height){
         this.title = title;
         this.width = width;
         this.height = height;
+
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     }
 
     private void init(){
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
+
+        // Hint:
+        // One of JFrame or Canvas can be focused at a time,
+        // so its better to add mouse listeners to both of them
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
+
         Assets.init();
 
         handler = new Handler(this);
@@ -49,7 +62,7 @@ public class Game implements Runnable{
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
 
-        State.setState(gameState);
+        State.setState(menuState);
     }
 
     private void tick(){
@@ -103,7 +116,7 @@ public class Game implements Runnable{
             }
 
             if(timer >= nanoSecond){
-                System.out.println("FPS: " + ticks);
+//                System.out.println("FPS: " + ticks);
                 ticks = 0;
                 timer -= nanoSecond;
             }
@@ -133,6 +146,10 @@ public class Game implements Runnable{
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public MouseManager getMouseManager() {
+        return mouseManager;
     }
 
     public GameCamera getGameCamera() {

@@ -2,6 +2,7 @@ package org.abondarev.visual;
 
 import org.abondarev.visual.gfx.GameCamera;
 import org.abondarev.visual.input.KeyManager;
+import org.abondarev.visual.input.MouseManager;
 import org.abondarev.visual.worlds.World;
 
 public class Handler {
@@ -19,6 +20,10 @@ public class Handler {
 
     public KeyManager getKeyManager(){
         return game.getKeyManager();
+    }
+
+    public MouseManager getMouseManager() {
+        return game.getMouseManager();
     }
 
     public int getWidth(){
