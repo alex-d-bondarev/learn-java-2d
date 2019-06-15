@@ -2,23 +2,40 @@ package org.abondarev.visual.states;
 
 import org.abondarev.visual.Game;
 import org.abondarev.visual.Handler;
+import org.abondarev.visual.gfx.Assets;
+import org.abondarev.visual.ui.ClickListener;
+import org.abondarev.visual.ui.UIImageButton;
+import org.abondarev.visual.ui.UIManager;
 
 import java.awt.*;
 
 public class MenuState extends State{
 
+    private UIManager uiManager;
+
     public MenuState(Handler handler){
         super(handler);
+        uiManager = new UIManager(handler);
+        handler.getMouseManager().setUiManager(uiManager);
+
+        uiManager.addObject(new UIImageButton(200, 200,
+                Assets.MENU_BUTTON_WIDTH,
+                Assets.MENU_BUTTON_HEIGHT,
+                Assets.startGameButton,
+                new ClickListener() {
+                    @Override
+                    public void onClick() {
+                        handler.getMouseManager().setUiManager(null);
+                        State.setState(handler.getGame().gameState);
+                    }
+                }));
     }
 
     public void tick() {
-        if(handler.getMouseManager().isLeftPressed() || handler.getMouseManager().isRightPressed()){
-            State.setState(handler.getGame().gameState);
-        }
+        uiManager.tick();
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.CYAN);
-        g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 30, 30);
+        uiManager.render(g);
     }
 }
