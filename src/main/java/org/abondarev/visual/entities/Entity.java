@@ -50,7 +50,7 @@ public abstract class Entity {
     }
 
     public void hurt(int amount){
-        height -= amount;
+        health -= amount;
         if(health <= 0){
             active = false;
             die();

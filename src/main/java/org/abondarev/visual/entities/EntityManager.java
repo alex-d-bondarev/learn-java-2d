@@ -32,8 +32,11 @@ public class EntityManager {
     }
 
     public void tick(){
-        entities.forEach(e -> {
+        ArrayList<Entity> tempEntities = new ArrayList<Entity>(entities);
+
+        tempEntities.stream().forEach(e -> {
             e.tick();
+
             if(!e.isActive()){
                 entities.remove(e);
             }

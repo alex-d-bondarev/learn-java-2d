@@ -1,6 +1,7 @@
 package org.abondarev.visual.entities.creatures;
 
 import org.abondarev.visual.Handler;
+import org.abondarev.visual.entities.Entity;
 import org.abondarev.visual.gfx.Animation;
 import org.abondarev.visual.gfx.Assets;
 
@@ -10,6 +11,7 @@ import java.awt.image.BufferedImage;
 public class Player extends Creature{
 
     private Animation downAnimation, upAnimation, leftAnimation, rightAnimation;
+    private long lastAttackTimer, attackCoolDown = 250, attackTimer = attackCoolDown;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT);
@@ -39,6 +41,50 @@ public class Player extends Creature{
         getInput();
         move();
         handler.getGameCamera().centerOnEntity(this);
+
+        checkAttacks();
+    }
+
+    private void checkAttacks(){
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+
+        if(attackTimer < attackCoolDown){
+            return;
+        }
+
+        Rectangle collisionBounds = getCollisionBounds(0f, 0f);
+        Rectangle attackBounds = new Rectangle();
+        int attackRange = 20;
+        attackBounds.width = attackRange;
+        attackBounds.height = attackRange;
+
+        if(handler.getKeyManager().attackUp){
+            attackBounds.x = collisionBounds.x + collisionBounds.width/2 - attackRange/2;
+            attackBounds.y = collisionBounds.y - attackRange;
+        } else if(handler.getKeyManager().attackDown){
+            attackBounds.x = collisionBounds.x + collisionBounds.width/2 - attackRange/2;
+            attackBounds.y = collisionBounds.y + collisionBounds.height;
+        } else if(handler.getKeyManager().attackLeft){
+            attackBounds.x = collisionBounds.x - attackRange;
+            attackBounds.y = collisionBounds.y + collisionBounds.height/2 - attackRange/2;
+        } else if(handler.getKeyManager().attackRight){
+            attackBounds.x = collisionBounds.x + collisionBounds.width;
+            attackBounds.y = collisionBounds.y + collisionBounds.height/2 - attackRange/2;
+        } else {
+            return;
+        }
+
+        attackTimer = 0;
+
+        for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+            if (e.equals(this)){
+                continue;
+            } else if (e.getCollisionBounds(0f, 0f).intersects(attackBounds)){
+                e.hurt(1);
+                return;
+            }
+        }
     }
 
     private void getInput(){

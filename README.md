@@ -5,4 +5,11 @@
 How to run?
 -----------
 
-Just use [Launcher](./src/main/java/org/abondarev/visual/Launcher.java) main method
+1. Ensure Java 8 is used
+1. Use [Launcher](./src/main/java/org/abondarev/visual/Launcher.java) main method
+
+Controls
+--------
+
+- W,A,S,D - for movement
+- Arrow keys for attack (come next to tree or stone and hold arrow key for ~ 5 seconds)
