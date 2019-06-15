@@ -25,14 +25,21 @@ public class MenuState extends State{
                 new ClickListener() {
                     @Override
                     public void onClick() {
-                        handler.getMouseManager().setUiManager(null);
-                        State.setState(handler.getGame().gameState);
+                        switchStateToGame();
                     }
                 }));
     }
 
     public void tick() {
         uiManager.tick();
+
+        // Turn menu off for testing
+        switchStateToGame();
+    }
+
+    private void switchStateToGame(){
+        handler.getMouseManager().setUiManager(null);
+        State.setState(handler.getGame().gameState);
     }
 
     public void render(Graphics g) {

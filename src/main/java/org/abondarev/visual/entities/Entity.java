@@ -6,10 +6,14 @@ import java.awt.*;
 
 public abstract class Entity {
 
+    public static final int DEFAULT_HEALTH = 10;
+
     protected Handler handler;
     protected float x, y;
+    protected int health;
     protected int width, height;
     protected Rectangle bounds;
+    private boolean active = true;
 
     public Entity(Handler handler, float x, float y, int width, int height){
         this.handler = handler;
@@ -19,8 +23,10 @@ public abstract class Entity {
         this.height = height;
 
         bounds = new Rectangle(0,0, width, height);
+        health = DEFAULT_HEALTH;
     }
 
+    public abstract void die();
     public abstract void tick();
     public abstract void render(Graphics g);
 
@@ -29,7 +35,8 @@ public abstract class Entity {
             if(entity.equals(this)){
                 continue;
             }
-            return entity.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset));
+            if(entity.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
+                return true;
         }
         return false;
     }
@@ -40,6 +47,14 @@ public abstract class Entity {
                 (int) (y + bounds.y + yOffset),
                 bounds.width,
                 bounds.height);
+    }
+
+    public void hurt(int amount){
+        height -= amount;
+        if(health <= 0){
+            active = false;
+            die();
+        }
     }
 
     public float getX() {
@@ -72,5 +87,21 @@ public abstract class Entity {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

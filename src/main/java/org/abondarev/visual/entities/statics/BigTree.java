@@ -12,6 +12,11 @@ public class BigTree extends StaticEntity {
         super(handler, x, y, Tile.TILEWIDTH*2, Tile.TILEHIGHT*2);
     }
 
+    @Override
+    public void die() {
+
+    }
+
     public void tick() {
 
     }
@@ -20,5 +25,10 @@ public class BigTree extends StaticEntity {
         g.drawImage(Assets.tree,
                 (int) (x - handler.getGameCamera().getXOffset()),
                 (int) (y - handler.getGameCamera().getYOffset()), width, height, null);
+    }
+
+    @Override
+    public boolean checkEntityCollisions(float xOffset, float yOffset) {
+        return super.checkEntityCollisions(xOffset, yOffset);
     }
 }

@@ -25,6 +25,11 @@ public class Player extends Creature{
         rightAnimation = new Animation(500, Assets.playerRight);
     }
 
+    @Override
+    public void die() {
+        System.out.println("You lose!");
+    }
+
     public void tick() {
         downAnimation.tick();
         upAnimation.tick();

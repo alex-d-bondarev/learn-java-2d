@@ -32,7 +32,12 @@ public class EntityManager {
     }
 
     public void tick(){
-        entities.forEach(Entity::tick);
+        entities.forEach(e -> {
+            e.tick();
+            if(!e.isActive()){
+                entities.remove(e);
+            }
+        });
         entities.sort(renderSorter);
     }
 
