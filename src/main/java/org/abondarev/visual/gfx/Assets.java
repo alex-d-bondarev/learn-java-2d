@@ -11,7 +11,7 @@ public class Assets {
     public static final int MENU_BUTTON_WIDTH = 182;
     public static final int MENU_BUTTON_HEIGHT = 45;
 
-    public static BufferedImage dirt, grass, stone, tree, rock;
+    public static BufferedImage dirt, grass, stone, tree, rock, wood;
     public static BufferedImage[] playerDown, playerUp, playerLeft, playerRight;
     public static BufferedImage[] startGameButton;
 
@@ -37,6 +37,7 @@ public class Assets {
         tree = oracleOfAgesSheet.crop(35* WIDTH +3, 6* HEIGHT -5, WIDTH *2, HEIGHT *2);
         stone = oracleOfAgesSheet.crop(38* WIDTH +7, 7, WIDTH, HEIGHT);
         rock = oracleOfAgesSheet.crop(38* WIDTH + 10, 3* HEIGHT, WIDTH, HEIGHT);
+        wood = oracleOfAgesSheet.crop(33* WIDTH + 8, 14* HEIGHT +6, WIDTH, HEIGHT);
 
         playerDown = new BufferedImage[2];
         playerDown[0] = oracleOfAgesSheet.crop(16* WIDTH -2, 5, WIDTH, HEIGHT);

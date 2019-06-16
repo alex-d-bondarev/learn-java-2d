@@ -34,7 +34,7 @@ public class EntityManager {
     public void tick(){
         ArrayList<Entity> tempEntities = new ArrayList<Entity>(entities);
 
-        tempEntities.stream().forEach(e -> {
+        tempEntities.forEach(e -> {
             e.tick();
 
             if(!e.isActive()){

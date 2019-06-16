@@ -5,6 +5,7 @@ import org.abondarev.visual.entities.EntityManager;
 import org.abondarev.visual.entities.creatures.Player;
 import org.abondarev.visual.entities.statics.BigTree;
 import org.abondarev.visual.entities.statics.Rock;
+import org.abondarev.visual.items.ItemManager;
 import org.abondarev.visual.tiles.Tile;
 import org.abondarev.visual.utils.Utils;
 
@@ -20,6 +21,8 @@ public class World {
     private static final String ALL_DELIMETERS = "\\s+";
 
     private EntityManager entityManager;
+    private ItemManager itemManager;
+
     private Handler handler;
     private int width, height, spawnX, spawnY;
     private int[][] tiles;
@@ -30,12 +33,15 @@ public class World {
         entityManager.addEntity(new BigTree(handler, 100, 300));
         entityManager.addEntity(new Rock(handler, 100, 200));
 
+        itemManager = new ItemManager(handler);
+
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
     }
 
     public void tick(){
+        itemManager.tick();
         entityManager.tick();
     }
 
@@ -52,6 +58,8 @@ public class World {
                         (int) (y * Tile.TILEHIGHT - handler.getGameCamera().getYOffset()));
             }
         }
+
+        itemManager.render(g);
 
         entityManager.render(g);
     }
@@ -122,5 +130,9 @@ public class World {
 
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 }
