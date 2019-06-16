@@ -4,6 +4,7 @@ import org.abondarev.visual.Handler;
 import org.abondarev.visual.entities.Entity;
 import org.abondarev.visual.gfx.Animation;
 import org.abondarev.visual.gfx.Assets;
+import org.abondarev.visual.inventory.Inventory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,6 +13,7 @@ public class Player extends Creature{
 
     private Animation downAnimation, upAnimation, leftAnimation, rightAnimation;
     private long lastAttackTimer, attackCoolDown = 250, attackTimer = attackCoolDown;
+    private Inventory inventory;
 
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT);
@@ -25,6 +27,8 @@ public class Player extends Creature{
         upAnimation = new Animation(500, Assets.playerUp);
         leftAnimation = new Animation(500, Assets.playerLeft);
         rightAnimation = new Animation(500, Assets.playerRight);
+
+        inventory = new Inventory(handler);
     }
 
     @Override
@@ -43,6 +47,8 @@ public class Player extends Creature{
         handler.getGameCamera().centerOnEntity(this);
 
         checkAttacks();
+
+        inventory.tick();
     }
 
     private void checkAttacks(){
@@ -109,6 +115,8 @@ public class Player extends Creature{
                 height,
                 null);
 
+        inventory.render(g);
+
 //        showCollisionBoundary(g);
     }
 
@@ -130,5 +138,9 @@ public class Player extends Creature{
         } else {
             return downAnimation.getCurrentFrame();
         }
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

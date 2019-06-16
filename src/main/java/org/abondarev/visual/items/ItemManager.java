@@ -21,7 +21,7 @@ public class ItemManager {
         tempItems.forEach(i -> {
             i.tick();
 
-            if(i.getCount() == Item.PICKED_UP){
+            if(i.isPickedUp()){
                 items.remove(i);
             }
         });
