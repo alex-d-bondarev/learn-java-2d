@@ -67,6 +67,13 @@ public class Item {
         return item;
     }
 
+    public Item createNew(int count){
+        Item item = new Item(texture, name, id);
+        item.setPickedUp(true);
+        item.setCount(count);
+        return item;
+    }
+
     public int getId() {
         return id;
     }
@@ -121,5 +128,9 @@ public class Item {
 
     public boolean isPickedUp() {
         return pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
     }
 }

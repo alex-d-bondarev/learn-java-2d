@@ -12,4 +12,5 @@ Controls
 --------
 
 - W,A,S,D - for movement
-- Arrow keys for attack (come next to tree or stone and hold arrow key for ~ 5 seconds)
+- Arrow keys - for attack (come next to tree or stone and hold arrow key for ~ 5 seconds)
+- i - for inventory + W,S for navigating it

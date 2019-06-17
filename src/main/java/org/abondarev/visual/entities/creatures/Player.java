@@ -59,6 +59,10 @@ public class Player extends Creature{
             return;
         }
 
+        if(inventory.isActive()){
+            return;
+        }
+
         Rectangle collisionBounds = getCollisionBounds(0f, 0f);
         Rectangle attackBounds = new Rectangle();
         int attackRange = 20;
@@ -94,6 +98,10 @@ public class Player extends Creature{
     }
 
     private void getInput(){
+        if (inventory.isActive()){
+            return;
+        }
+
         xMove = 0;
         yMove = 0;
 
@@ -115,9 +123,11 @@ public class Player extends Creature{
                 height,
                 null);
 
-        inventory.render(g);
-
 //        showCollisionBoundary(g);
+    }
+
+    public void postRender(Graphics g){
+        inventory.render(g);
     }
 
     private void showCollisionBoundary(Graphics g){

@@ -1,8 +1,11 @@
 package org.abondarev.visual.gfx;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
+
+    public static Font font28;
 
     private static final int HEIGHT = 16, WIDTH = 16;
     private static final int MENU_FIRST_COLUMN_PADDING = 8;
@@ -12,14 +15,24 @@ public class Assets {
     public static final int MENU_BUTTON_HEIGHT = 45;
 
     public static BufferedImage dirt, grass, stone, tree, rock, wood;
+    public static BufferedImage inventoryScreen;
     public static BufferedImage[] playerDown, playerUp, playerLeft, playerRight;
     public static BufferedImage[] startGameButton;
 
     public static void init(){
         initZeldaAssets();
         initMenuAssets();
+        initInventoryScreen();
+        initFont();
     }
 
+    private static void initFont(){
+        font28 = FontLoader.loadFont("res/fonts/slkscr.ttf", 28);
+    }
+
+    private static void initInventoryScreen(){
+        inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
+    }
 
     private static void initMenuAssets(){
         SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("/textures/MainMenuButtons.png"));

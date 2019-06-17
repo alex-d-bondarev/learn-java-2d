@@ -48,6 +48,8 @@ public class EntityManager {
         entities.forEach(entity -> {
             entity.render(g);
         });
+
+        player.postRender(g);
     }
 
     public void addEntity(Entity newEntity){
